@@ -1,7 +1,8 @@
 extends Area2D
 
 var speed_limit = 400
-var velocity = Vector2.ZERO
+var velocity = 0
+var rotation_vector
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,6 +15,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	position += velocity * delta
+	rotation_vector = Vector2.UP.rotated(rotation)
+	position += velocity * rotation_vector * delta
 	
 	
