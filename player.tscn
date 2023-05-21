@@ -8,11 +8,11 @@ radius = 25.0
 height = 76.0
 
 [node name="Player" type="Area2D"]
+scale = Vector2(0.3, 0.3)
 script = ExtResource("1_jk7iw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_62tj2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_ik8ej")
