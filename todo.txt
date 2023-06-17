@@ -1,0 +1,5 @@
+- player movement (done)
+- asteroids - spawning + movement
+- asteroids sprites
+- player weapons and shield
+- nice sprites/shaders/other stuff
