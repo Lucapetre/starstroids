@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cm76ywgqq40ao"]
+
+[ext_resource type="PackedScene" uid="uid://bxtww4jr0lp0w" path="res://asteroid.tscn" id="1_03k77"]
+[ext_resource type="PackedScene" uid="uid://pvc66e8a2oju" path="res://player.tscn" id="2_yb8x1"]
+
+[sub_resource type="GDScript" id="GDScript_se2k6"]
+script/source = "extends Node
+
+@export var asteroid_scene: PackedScene
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="Curve2D" id="Curve2D_cjt62"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1280, 0, 0, 0, 0, 0, 1280, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="GameScene" type="Node"]
+script = SubResource("GDScript_se2k6")
+asteroid_scene = ExtResource("1_03k77")
+
+[node name="AsteroidSpawnTimer" type="Timer" parent="."]
+
+[node name="AsteroidSpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_cjt62")
+
+[node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawnPath"]
+
+[node name="Player" parent="." instance=ExtResource("2_yb8x1")]

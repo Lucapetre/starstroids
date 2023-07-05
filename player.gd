@@ -19,19 +19,15 @@ func _ready():
 	position.y = screen_size.y / 2
 	
 
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	
+func movement(delta):
 	# velocity vector input
+	# forward is fastest
 	if Input.is_action_pressed("accelerate"):
 		velocity += Vector2.UP.rotated(rotation) * standard_acceleration * delta
 	
 	if Input.is_action_pressed("decelerate"):
-		velocity += Vector2.DOWN.rotated(rotation) * standard_acceleration * delta
+		velocity += Vector2.DOWN.rotated(rotation) * standard_acceleration * delta / 1.5
 	
-	# strafing is nerfed so as to not negate acceleration and decelaration
 	if Input.is_action_pressed("strafe_left"):
 		velocity += Vector2.LEFT.rotated(rotation) * standard_acceleration * delta / 1.5
 	
@@ -39,7 +35,6 @@ func _process(delta):
 		velocity += Vector2.RIGHT.rotated(rotation) * standard_acceleration * delta / 1.5
 	
 	velocity = velocity.normalized() * (max (velocity.length() - standard_acceleration * delta / 3, 0))
-	
 	
 	if velocity.length() > speed_limit:
 		velocity = velocity.normalized() * speed_limit
@@ -51,23 +46,32 @@ func _process(delta):
 	if Input.is_action_pressed("turn_right"):
 		rotation += rotation_speed * delta
 	
-	
-	
 	# move the player
 	position += velocity * delta
+
+func wrap_if_out_of_screen(): # wrap around the screen
+	
+	var wrap_size = 115 * scale.x # distance from edge to wrap - x=y
+	var wrap_delta = wrap_size - 5 # don't bring right at wrap_size so as to not create a loop
+	
+	if position.x < -wrap_size:
+		position.x = screen_size.x + wrap_delta
+
+	if position.y < -wrap_size:
+		position.y = screen_size.y + wrap_delta
+
+	if position.x > screen_size.x + wrap_size:
+		position.x = -wrap_delta
+
+	if position.y > screen_size.y + wrap_size:
+		position.y = -wrap_delta
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	
+	movement(delta)
+	wrap_if_out_of_screen()
 	
 
-	# wrap around the screen
-	
-	if position.x < -75:
-		position.x = screen_size.x + 50
-	
-	if position.y < -75:
-		position.y = screen_size.y + 50
-	
-	if position.x > screen_size.x + 75:
-		position.x = -50
-	
-	if position.y > screen_size.y + 75:
-		position.y = -50
-	
+
