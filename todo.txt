@@ -9,8 +9,8 @@
 - player weapons
    - sprites
    - bullets/lasers
-       - sprites
-       - shaders?
+	   - sprites
+	   - shaders?
 
 - player shield
    - sprite
