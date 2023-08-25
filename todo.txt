@@ -1,5 +1,18 @@
+(done) - finished
+? - optional/maybe
+
 - player movement (done)
+
 - asteroids - spawning + movement
 - asteroids sprites
-- player weapons and shield
+
+- player weapons
+   - sprites
+   - bullets/lasers
+       - sprites
+       - shaders?
+
+- player shield
+   - sprite
+
 - nice sprites/shaders/other stuff
