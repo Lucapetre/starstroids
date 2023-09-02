@@ -12,7 +12,6 @@ var score
 
 func game_start():
 	score = 0
-	$Player.start()
 	$StartTimer.start()
 
 func game_over():
@@ -31,6 +30,7 @@ func _process(delta):
 
 func _on_start_timer_timeout():
 	$AsteroidSpawnTimer.start()
+	$Player.start()
 
 
 func _on_asteroid_spawn_timer_timeout():

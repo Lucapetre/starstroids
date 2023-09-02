@@ -78,7 +78,7 @@ func _on_body_entered(body):
 	print("eee")
 	hide() # replace with health/damage system
 	hit.emit()
-	#$CollisionPolygon2D.set_deferred("disabled", true)
+	$CollisionPolygon2D.set_deferred("disabled", true)
 	
 	body.queue_free()
 
