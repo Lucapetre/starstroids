@@ -1,5 +1,7 @@
 extends Area2D
 
+signal hit
+
 @export var speed_limit = 400
 @export var standard_acceleration = 200
 @export var rotation_speed = 90 * (TAU / 180)
@@ -8,15 +10,21 @@ var velocity = Vector2.ZERO
 
 var screen_size
 
+var start_position
 
+func start():
+	
+	position = start_position
+	show()
+	$CollisionPolygon2D.set_deferred("disabled",false)
+	print($CollisionPolygon2D.disabled)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
+	hide()
 	screen_size = get_viewport_rect().size
-
-	position.x = screen_size.x / 2
-	position.y = screen_size.y / 2
+	start_position = screen_size / 2
 	
 
 func movement(delta):
@@ -66,12 +74,17 @@ func wrap_if_out_of_screen(): # wrap around the screen
 	if position.y > screen_size.y + wrap_size:
 		position.y = -wrap_delta
 
+func _on_body_entered(body):
+	print("eee")
+	hide() # replace with health/damage system
+	hit.emit()
+	$CollisionPolygon2D.set_deferred("disabled", true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
 	movement(delta)
 	wrap_if_out_of_screen()
-	
+
 
 

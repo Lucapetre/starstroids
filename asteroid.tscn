@@ -1,17 +1,43 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxtww4jr0lp0w"]
+[gd_scene load_steps=11 format=3 uid="uid://bxtww4jr0lp0w"]
 
 [ext_resource type="Script" path="res://Asteroid.gd" id="1_wl4ib"]
 [ext_resource type="Texture2D" uid="uid://b08d8ewwbhitf" path="res://Asteroids_images/AsteroidNormal1.png" id="2_ig8c2"]
 [ext_resource type="Texture2D" uid="uid://bmwpegygemtjh" path="res://Asteroids_images/AsteroidFlacari1.png" id="3_u70k2"]
+[ext_resource type="Texture2D" uid="uid://cums73s3lilbm" path="res://Asteroids_images/AsteroidNormal2.png" id="3_www6w"]
+[ext_resource type="Texture2D" uid="uid://dmr7lulxxxre1" path="res://Asteroids_images/AsteroidNormal3.png" id="4_bebiy"]
 [ext_resource type="Texture2D" uid="uid://brms1s1hdsvxw" path="res://Asteroids_images/AsteroidFlacari2.png" id="4_qvnq1"]
 [ext_resource type="Texture2D" uid="uid://bkpc4t5uoy1xb" path="res://Asteroids_images/AsteroidFlacari3.png" id="5_8w1r2"]
 [ext_resource type="Texture2D" uid="uid://bgnhhf2gjj0oq" path="res://Asteroids_images/AsteroidFlacari4.png" id="6_4w54w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nwtqr"]
-radius = 32.0156
+radius = 32.249
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6amhc"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ig8c2")
+}],
+"loop": true,
+"name": &"Asteroid1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_www6w")
+}],
+"loop": true,
+"name": &"Asteroid2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_bebiy")
+}],
+"loop": true,
+"name": &"Asteroid3",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 0.4,
 "texture": ExtResource("3_u70k2")
@@ -38,15 +64,11 @@ script = ExtResource("1_wl4ib")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nwtqr")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_ig8c2")
-
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6amhc")
-animation = &"FireAsteroid"
+animation = &"Asteroid1"
 autoplay = "FireAsteroid"
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

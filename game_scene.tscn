@@ -8,15 +8,54 @@ script/source = "extends Node
 
 @export var asteroid_scene: PackedScene
 
+var score
+
+func game_start():
+	score = 0
+	$Player.start()
+	$StartTimer.start()
+
+func game_over():
+	$AsteroidSpawnTimer.stop()
+	game_start()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	game_start()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func _on_start_timer_timeout():
+	$AsteroidSpawnTimer.start()
+
+
+func _on_asteroid_spawn_timer_timeout():
+	
+	var asteroid = asteroid_scene.instantiate()
+	
+	var asteroid_spawn_location = get_node(\"AsteroidSpawnPath/AsteroidSpawnLocation\")
+	asteroid_spawn_location.progress_ratio = randf()
+	
+	var direction = asteroid_spawn_location.rotation + PI/2
+	
+	asteroid.position = asteroid_spawn_location.position
+	
+	direction += randf_range(-PI / 4, PI / 4)
+	asteroid.rotation = direction
+	
+	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+	asteroid.linear_velocity = velocity.rotated(direction)
+	
+	add_child(asteroid)
+	
+
+
+func _on_player_hit():
+	game_over()
 "
 
 [sub_resource type="Curve2D" id="Curve2D_cjt62"]
@@ -37,3 +76,11 @@ curve = SubResource("Curve2D_cjt62")
 [node name="AsteroidSpawnLocation" type="PathFollow2D" parent="AsteroidSpawnPath"]
 
 [node name="Player" parent="." instance=ExtResource("2_yb8x1")]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="AsteroidSpawnTimer" to="." method="_on_asteroid_spawn_timer_timeout"]
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
