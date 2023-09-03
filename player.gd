@@ -17,7 +17,7 @@ func start():
 	position = start_position
 	show()
 	$CollisionPolygon2D.set_deferred("disabled",false)
-	print($CollisionPolygon2D.disabled)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -75,7 +75,7 @@ func wrap_if_out_of_screen(): # wrap around the screen
 		position.y = -wrap_delta
 
 func _on_body_entered(body):
-	print("eee")
+	
 	hide() # replace with health/damage system
 	hit.emit()
 	$CollisionPolygon2D.set_deferred("disabled", true)
