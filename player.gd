@@ -1,10 +1,14 @@
 extends Area2D
 
 signal hit
+signal dead
+signal health_changed
 
 @export var speed_limit = 400
 @export var standard_acceleration = 200
 @export var rotation_speed = 90 * (TAU / 180)
+@export var max_health = 2000
+@export var health = 2000
 
 var velocity = Vector2.ZERO
 
@@ -16,6 +20,8 @@ func start():
 	
 	position = start_position
 	show()
+	health = 2000
+	health_changed.emit()
 	$CollisionPolygon2D.set_deferred("disabled",false)
 
 
@@ -74,11 +80,47 @@ func wrap_if_out_of_screen(): # wrap around the screen
 	if position.y > screen_size.y + wrap_size:
 		position.y = -wrap_delta
 
-func _on_body_entered(body):
+
+func player_hit():
 	
-	hide() # replace with health/damage system
+	health -= randi_range(50,150)
+	if (health <= 0):
+		hide()
+		health = 0
+		health_changed.emit()
+		dead.emit()
+		return
+	
+	health_changed.emit()
+	
 	hit.emit()
 	$CollisionPolygon2D.set_deferred("disabled", true)
+	hide()
+	
+	$InvulnerabilityTimer.start()
+	$ShowTimer.start()
+
+
+func _on_invulnerability_timer_timeout():
+	
+	$HideTimer.stop()
+	$ShowTimer.stop()
+	show()
+	$CollisionPolygon2D.set_deferred("disabled",false)
+
+func _on_show_timer_timeout():
+	show()
+	$HideTimer.start()
+
+func _on_hide_timer_timeout():
+	hide()
+	$ShowTimer.start()
+
+func _on_body_entered(body):
+	
+	player_hit()
+	
+	
 	
 	body.queue_free()
 
@@ -87,6 +129,4 @@ func _process(delta):
 	
 	movement(delta)
 	wrap_if_out_of_screen()
-
-
 

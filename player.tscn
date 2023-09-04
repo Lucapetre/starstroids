@@ -13,4 +13,19 @@ polygon = PackedVector2Array(0, -75, -75, 40, 75, 40)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_fl350")
 
+[node name="ShowTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="HideTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="ShowTimer" to="." method="_on_show_timer_timeout"]
+[connection signal="timeout" from="HideTimer" to="." method="_on_hide_timer_timeout"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="_on_invulnerability_timer_timeout"]
