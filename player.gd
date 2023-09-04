@@ -8,7 +8,8 @@ signal health_changed
 @export var standard_acceleration = 200
 @export var rotation_speed = 90 * (TAU / 180)
 @export var max_health = 2000
-@export var health = 2000
+
+var health = 2000
 
 var velocity = Vector2.ZERO
 
@@ -119,9 +120,6 @@ func _on_hide_timer_timeout():
 func _on_body_entered(body):
 	
 	player_hit()
-	
-	
-	
 	body.queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

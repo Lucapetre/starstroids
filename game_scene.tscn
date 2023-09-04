@@ -36,7 +36,6 @@ func _on_start_timer_timeout():
 func _on_asteroid_spawn_timer_timeout():
 	
 	var asteroid = asteroid_scene.instantiate()
-	print(\"Asteroid scene instantiated\")
 	
 	var asteroid_spawn_location = get_node(\"AsteroidSpawnPath/AsteroidSpawnLocation\")
 	asteroid_spawn_location.progress_ratio = randf()
@@ -51,9 +50,7 @@ func _on_asteroid_spawn_timer_timeout():
 	asteroid.linear_velocity = velocity.rotated(direction)
 	
 	
-	print(\"Child will be added\")
 	add_child(asteroid)
-	print(\"Child added\")
 	
 
 
